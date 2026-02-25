@@ -1,30 +1,21 @@
-# Human Disease Detector
-
-A comprehensive healthcare platform combining AI-powered disease prediction with a modern, cinematic frontend experience.
-
-## 🎯 Project Overview
-
-This project consists of two main components:
-1. **Frontend (Next.js)** - Cinematic healthcare landing page with animated features
-2. **Backend (Python)** - Production-ready disease prediction system using ML ensemble
-
----
-
-## 🎨 Frontend - Dhanvantari AI
+# Dhanvantari AI - Healthcare Platform Frontend
 
 A premium, cinematic healthcare landing page featuring scroll-driven animations, canvas-based image sequences, and smooth interactions with a beautiful sky blue and white theme.
 
-### Frontend Features
+## ✨ Features
 
+### Animated Feature Cards
+- **AI Diagnosis** - Pulsing Neural Nodes with connecting lines suggesting "thinking"
+- **24/7 Monitoring** - Smooth Sine Wave (EKG heartbeat line)
+- **Expert Network** - Soft Bokeh Particles (floating light orbs)
+- **Secure & Private** - Digital Shield/Grid with scanning line
+- **Health Analytics** - Growing Data Pillars (bars that rise and fall)
+- **Mobile Access** - Floating App UI Glass (3D moving rectangles)
+
+### Page Sections
 - Responsive navigation bar with "Dhanvantari AI" branding
 - Full-screen hero video background with animated text
-- Animated features section with 6 key capabilities:
-  - AI Diagnosis (Pulsing Neural Nodes)
-  - 24/7 Monitoring (Smooth Sine Wave)
-  - Expert Network (Soft Bokeh Particles)
-  - Secure & Private (Digital Shield/Grid)
-  - Health Analytics (Growing Data Pillars)
-  - Mobile Access (Floating App UI Glass)
+- Interactive features section with animated backgrounds
 - How It Works section with 4-step process
 - Canvas-based scroll animation (128 frames)
 - About section with statistics
@@ -33,127 +24,156 @@ A premium, cinematic healthcare landing page featuring scroll-driven animations,
 - Smooth scroll with Lenis
 - Framer Motion animations throughout
 
-### Frontend Tech Stack
+## 🛠️ Tech Stack
 
-- Next.js 15 (App Router)
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Lenis (Smooth Scroll)
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Animation library
+- **Lenis** - Smooth scroll library
 
-### Getting Started (Frontend)
+## 🚀 Getting Started
 
-1. Install dependencies:
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Akhilesh-Gangawane/HumanDiseaseDetector.git
+cd HumanDiseaseDetector
+git checkout Frontend-V-1
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Run the development server:
+3. Run the development server:
 ```bash
 npm run dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-### Frontend Structure
+## 📁 Project Structure
 
 ```
 ├── app/
+│   ├── dashboard/          # Doctor dashboard pages
+│   ├── patient-dashboard/  # Patient dashboard pages
+│   ├── login/              # Login page
 │   ├── layout.tsx          # Root layout with Lenis provider
-│   ├── page.tsx            # Main page with all sections
+│   ├── page.tsx            # Main landing page
 │   └── globals.css         # Global styles
 ├── components/
 │   ├── landing/            # Landing page components
+│   │   ├── Navbar.tsx
+│   │   ├── HeroVideo.tsx
+│   │   ├── FeaturesSection.tsx
+│   │   ├── HowItWorks.tsx
+│   │   ├── HealthScroll.tsx
+│   │   ├── AboutSection.tsx
+│   │   ├── ContactSection.tsx
+│   │   ├── CTASection.tsx
+│   │   └── Footer.tsx
 │   ├── doctor/             # Doctor dashboard components
 │   ├── patient/            # Patient dashboard components
 │   ├── ui/                 # Reusable UI components
-│   └── animations/         # Animation components
+│   │   ├── FeatureBackgrounds.tsx  # Animated backgrounds
+│   │   ├── GlassCard.tsx
+│   │   ├── GradientButton.tsx
+│   │   └── ScrollProgress.tsx
+│   ├── animations/         # Animation components
+│   └── LenisProvider.tsx   # Smooth scroll provider
+├── hooks/
+│   ├── useImagePreloader.ts
+│   └── usePageTransition.ts
+├── lib/
+│   ├── config/
+│   ├── constants/
+│   ├── data/
+│   └── types/
 └── public/
     ├── herosection.mp4     # Hero video
-    └── scroll-sequence/    # 128 frame images
+    ├── logo.png
+    └── scroll-sequence/    # 128 frame images for scroll animation
 ```
 
----
+## 🎨 Key Components
 
-## 🤖 Backend - Disease Prediction System
+### FeatureBackgrounds.tsx
+Contains all animated SVG backgrounds for feature cards:
+- `NeuralNetworkBg` - Pulsing nodes with connections
+- `EKGWaveBg` - Flowing heartbeat wave
+- `NetworkMapBg` - Floating bokeh particles
+- `LockSecurityBg` - Scanning grid with hexagons
+- `AnalyticsChartBg` - Growing bar chart
+- `MobileAppBg` - Floating glass UI elements
 
-A high-performance multiclass classification system designed to predict final disease outcomes from binary symptom features. The system utilizes a multi-model ensemble (XGBoost, LightGBM, Random Forest) with GPU acceleration and serves predictions via a FastAPI service.
+### HealthScroll.tsx
+Canvas-based scroll animation that plays through 128 frames as user scrolls.
 
-### Backend Features
+### LenisProvider.tsx
+Provides smooth scrolling experience across the entire application.
 
-- **Multi-Model Ensemble**: Combines XGBoost, LightGBM, and Random Forest
-- **GPU Acceleration**: Optimized for NVIDIA GPU
-- **Graph-Based Feature Engineering**: Node2Vec embeddings
-- **Production-Ready API**: FastAPI based inference service
-- **Explainable AI (XAI)**: Feature importance analysis and SHAP values
-- **Robust Preprocessing**: End-to-end sklearn pipeline
+## 🏗️ Build for Production
 
-### Backend Structure
-
-```
-├── Final_dataset.csv       # Training dataset (260k+ rows)
-├── app.py                   # FastAPI Application
-├── train_optuna.py          # Main training script
-├── symptom_relationships.py # Co-occurrence analysis
-├── graph_features.py        # Node2Vec embedding generation
-├── pipeline.py              # Core logic & custom Graph Transformer
-├── test_app.py              # Sample client for API testing
-├── requirements.txt         # Project dependencies
-└── best_pipeline.joblib     # Trained ensemble pipeline
-```
-
-### Backend Installation
-
-1. Set up a virtual environment:
-   ```powershell
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1
-   ```
-
-2. Install dependencies:
-   ```powershell
-   pip install -r requirements.txt
-   ```
-
-### Backend Usage
-
-1. **Training**: Re-train the model:
-   ```bash
-   python train_optuna.py
-   ```
-
-2. **Running the API**:
-   ```bash
-   python app.py
-   ```
-
-3. **Testing**:
-   ```bash
-   python test_app.py
-   ```
-
-### Performance Summary
-
-- **Overall Accuracy**: ~80%
-- **Macro F1 Score**: 0.76
-- **Target Count**: 669 unique diseases
-- **Input Features**: 500+ binary symptom indicators + 32D Node2Vec Embeddings
-
----
-
-## 🚀 Build & Deploy
-
-### Frontend Build
 ```bash
 npm run build
 npm start
 ```
 
-### Backend Deployment
-The FastAPI service runs on port 8000 and can be deployed using Docker or any Python hosting service.
+## 🌐 Deployment
 
----
+The application can be deployed to:
+- **Vercel** (Recommended for Next.js)
+- **Netlify**
+- **AWS Amplify**
+- Any Node.js hosting service
+
+### Deploy to Vercel
+```bash
+npm install -g vercel
+vercel
+```
+
+## 📱 Responsive Design
+
+The application is fully responsive and optimized for:
+- Desktop (1920px+)
+- Laptop (1024px - 1919px)
+- Tablet (768px - 1023px)
+- Mobile (320px - 767px)
+
+## ⚡ Performance Optimizations
+
+- Image preloading with progress indicator
+- Canvas rendering optimization
+- Smooth 60fps scroll animations
+- Lazy loading for off-screen components
+- Optimized bundle size with code splitting
+
+## 🎯 Future Enhancements
+
+- Integration with backend API for disease prediction
+- User authentication and authorization
+- Patient and doctor dashboard functionality
+- Real-time chat with healthcare professionals
+- Medical records management
+- Appointment scheduling system
 
 ## 📄 License
 
 Internal Project - Healthcare AI Platform
+
+## 👥 Contributors
+
+Akhilesh Gangawane
+
+---
+
+**Note:** This is the frontend repository. The backend API with ML models is maintained separately.

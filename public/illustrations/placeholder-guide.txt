@@ -1,0 +1,21 @@
+PLACEHOLDER IMAGES NEEDED
+
+Save your downloaded/generated images with these exact names:
+
+1. ai-prediction.png (1024x1024px, transparent background)
+2. health-monitoring.png (1024x1024px, transparent background)
+3. doctor-connection.png (1024x1024px, transparent background)
+4. patient-avatar.png (1024x1024px, transparent background)
+5. doctor-avatar.png (1024x1024px, transparent background)
+
+QUICK LINKS:
+- Storyset Doctor: https://storyset.com/doctor
+- Storyset Patient: https://storyset.com/patient
+- Storyset Medical: https://storyset.com/clinic
+- Freepik 3D Medical: https://www.freepik.com/vectors/3d-medical
+- Pixabay Healthcare: https://pixabay.com/illustrations/search/healthcare/
+
+TIPS:
+1. On Storyset: Click illustration → Customize → Change colors to blue/teal → Download PNG
+2. On Freepik: Search "doctor 3D blue" or "medical technology illustration"
+3. On Pixabay: Filter by "Transparent" and "Illustrations"

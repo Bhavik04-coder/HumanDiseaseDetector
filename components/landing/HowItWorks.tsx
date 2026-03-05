@@ -10,26 +10,26 @@ export default function HowItWorks() {
   const steps = [
     {
       number: '01',
-      title: 'Sign Up & Connect',
-      description: 'Create your account and connect your health monitoring devices or manually input your health data.',
+      title: 'Sign Up & Login',
+      description: 'Create your account as a patient or doctor and access your personalized healthcare dashboard.',
       color: 'from-sky-400 to-sky-500',
     },
     {
       number: '02',
-      title: 'AI Analysis',
-      description: 'Our advanced AI algorithms analyze your health patterns, vitals, and historical data in real-time.',
+      title: 'Choose Service',
+      description: 'Select from AI disease prediction, doctor consultation, pathology tests, or buy medicines online.',
       color: 'from-sky-500 to-sky-600',
     },
     {
       number: '03',
-      title: 'Get Insights',
-      description: 'Receive personalized health insights, early disease predictions, and actionable recommendations.',
+      title: 'Get Treatment',
+      description: 'Receive AI predictions, consult specialists, book lab tests, or order medicines with home delivery.',
       color: 'from-sky-600 to-sky-700',
     },
     {
       number: '04',
-      title: 'Connect with Doctors',
-      description: 'Seamlessly connect with healthcare professionals for consultations and treatment plans.',
+      title: 'Stay Protected',
+      description: 'Explore health insurance plans for comprehensive coverage and access medical knowledge resources.',
       color: 'from-sky-700 to-sky-800',
     },
   ]

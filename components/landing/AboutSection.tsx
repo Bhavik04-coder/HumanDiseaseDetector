@@ -8,9 +8,10 @@ export default function AboutSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   const stats = [
-    { value: '81%', label: 'Accuracy' },
-    { value: '24/7', label: 'Monitoring' },
-    { value: '100%', label: 'Secure & Private' },
+    { value: '500+', label: 'Certified Doctors' },
+    { value: '200+', label: 'Lab Tests Available' },
+    { value: '10K+', label: 'Medicines in Stock' },
+    { value: '24/7', label: 'Support Available' },
   ]
 
   return (
@@ -24,17 +25,17 @@ export default function AboutSection() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-sky-900 mb-6">
-              The Future of
+              Complete Healthcare
               <br />
-              Healthcare is Here
+              Platform for Everyone
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-6">
-              Dhanvantari AI combines cutting-edge artificial intelligence with medical expertise
-              to provide real-time health monitoring and early disease detection.
+              Dhanvantari AI is your all-in-one healthcare solution combining AI-powered disease prediction,
+              online doctor consultations, pathology services, and an online pharmacy.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
-              Our platform analyzes your health data continuously, alerting you and your healthcare
-              providers to potential issues before they become serious.
+              From preventive care to treatment and medication delivery, we provide comprehensive
+              healthcare services with the convenience of digital access and the assurance of quality care.
             </p>
           </motion.div>
 

@@ -1,9 +1,15 @@
 'use client';
 
-import { ArrowRight, Stethoscope, Brain, Activity } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, Stethoscope, Brain, Activity, X } from 'lucide-react';
 import { PulsePattern } from '@/components/ui/BackgroundPatterns';
+import { useRouter } from 'next/navigation';
+import HeroScroll from './HeroScroll';
+import PredictionForm from './PredictionForm';
 
 export default function HeroSection() {
+  const router = useRouter();
+  const [showPrediction, setShowPrediction] = useState(false);
   return (
     <section className="relative min-h-screen pt-16 bg-gradient-to-br from-blue-50 via-teal-50 to-blue-100 overflow-hidden">
       {/* Background decorative elements */}
@@ -40,11 +46,17 @@ export default function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2">
+              <button 
+                onClick={() => setShowPrediction(true)}
+                className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
+              >
                 <span>Start Prediction</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="px-8 py-4 bg-white/80 backdrop-blur-sm text-blue-600 rounded-xl font-semibold border-2 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300">
+              <button 
+                onClick={() => router.push('/consult-doctor')}
+                className="px-8 py-4 bg-white/80 backdrop-blur-sm text-blue-600 rounded-xl font-semibold border-2 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300"
+              >
                 Consult Doctor
               </button>
             </div>
@@ -66,40 +78,19 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Content - Medical AI Illustration */}
+          {/* Right Content - Mouse-Controlled Animation */}
           <div className="relative">
-            <div className="relative w-full h-[500px] flex items-center justify-center">
-              {/* Central brain/head illustration */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-80 h-80 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full backdrop-blur-sm border border-white/30 flex items-center justify-center">
-                  <Brain className="w-40 h-40 text-blue-500" />
-                  
-                  {/* Floating medical icons */}
-                  <div className="absolute top-10 left-10 w-16 h-16 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg flex items-center justify-center animate-float">
-                    <Activity className="w-8 h-8 text-teal-500" />
-                  </div>
-                  
-                  <div className="absolute top-20 right-10 w-16 h-16 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg flex items-center justify-center animate-float-delayed">
-                    <Stethoscope className="w-8 h-8 text-blue-500" />
-                  </div>
-                  
-                  <div className="absolute bottom-20 left-20 w-16 h-16 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg flex items-center justify-center animate-float">
-                    <svg className="w-8 h-8 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </div>
-                  
-                  <div className="absolute bottom-10 right-20 w-16 h-16 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg flex items-center justify-center animate-float-delayed">
-                    <svg className="w-8 h-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+            <div className="relative w-full h-[500px]">
+              <HeroScroll />
             </div>
           </div>
         </div>
       </div>
+
+      {/* Disease Prediction Modal */}
+      {showPrediction && (
+        <PredictionForm onClose={() => setShowPrediction(false)} />
+      )}
     </section>
   );
 }

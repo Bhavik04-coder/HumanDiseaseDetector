@@ -53,10 +53,10 @@ export default function CTASection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Ready to Transform Your Healthcare?
+            Ready to Experience Better Healthcare?
           </h2>
           <p className="text-xl text-sky-100 mb-10 leading-relaxed">
-            Join thousands of users who trust Dhanvantari AI for their health monitoring and disease prediction needs.
+            Join thousands of users who trust Dhanvantari AI for comprehensive healthcare services from disease prediction to medicine delivery.
           </p>
 
           <motion.div
@@ -91,13 +91,13 @@ export default function CTASection() {
             className="mt-12 flex items-center justify-center gap-8 text-white"
           >
             <div className="text-center">
-              <div className="text-3xl font-bold">50K+</div>
-              <div className="text-sky-100">Active Users</div>
+              <div className="text-3xl font-bold">500+</div>
+              <div className="text-sky-100">Doctors</div>
             </div>
             <div className="w-px h-12 bg-sky-400" />
             <div className="text-center">
-              <div className="text-3xl font-bold">98%</div>
-              <div className="text-sky-100">Accuracy Rate</div>
+              <div className="text-3xl font-bold">10K+</div>
+              <div className="text-sky-100">Medicines</div>
             </div>
             <div className="w-px h-12 bg-sky-400" />
             <div className="text-center">

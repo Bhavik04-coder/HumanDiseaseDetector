@@ -28,24 +28,25 @@ export default function OpdScroll({ onScrollComplete }: OpdScrollProps) {
   // Text opacity for "Scroll" indicator
   const scrollTextOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
 
-  // Force scroll to top on mount - multiple methods for reliability
+  // Force scroll to top on mount and prevent body overflow
   useEffect(() => {
-    // Method 1: Immediate scroll
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    // Force scroll to top
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     
-    // Method 2: After a tiny delay
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, 0);
-    
-    // Method 3: Disable scroll restoration
+    // Disable scroll restoration
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
+
+    // Cleanup: restore body scroll when component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, []);
 
   // Monitor scroll progress to show button at end

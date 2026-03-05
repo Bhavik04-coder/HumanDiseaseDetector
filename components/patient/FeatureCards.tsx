@@ -1,13 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Brain, MessageSquare, X } from 'lucide-react';
-import PredictionForm from './PredictionForm';
 import ChatAssistant from './ChatAssistant';
-import { BrainAIBackground, SecurityGridBackground } from './CardBackgrounds';
 
 export default function FeatureCards() {
-  const [showPrediction, setShowPrediction] = useState(false);
+  const router = useRouter();
   const [showChat, setShowChat] = useState(false);
 
   return (
@@ -18,7 +17,7 @@ export default function FeatureCards() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Disease Prediction Card */}
             <div
-              onClick={() => setShowPrediction(true)}
+              onClick={() => router.push('/disease-prediction')}
               className="group cursor-pointer backdrop-blur-md bg-white/70 rounded-3xl shadow-xl border border-white/20 p-12 hover:shadow-2xl hover:scale-105 transition-all duration-300"
             >
               <div className="flex flex-col items-center text-center space-y-6">
@@ -27,7 +26,7 @@ export default function FeatureCards() {
                 </div>
                 <h3 className="text-3xl font-bold text-gray-800">Disease Prediction</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Get AI-powered disease predictions based on your symptoms, age, and medical history
+                  Get AI-powered disease predictions based on your symptoms with instant analysis
                 </p>
                 <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
                   Start Prediction
@@ -56,22 +55,6 @@ export default function FeatureCards() {
           </div>
         </div>
       </section>
-
-      {/* Disease Prediction Modal */}
-      {showPrediction && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <button
-              onClick={() => setShowPrediction(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors"
-              aria-label="Close"
-            >
-              <X className="w-6 h-6 text-gray-700" />
-            </button>
-            <PredictionForm />
-          </div>
-        </div>
-      )}
 
       {/* AI Chat Assistant Modal */}
       {showChat && (

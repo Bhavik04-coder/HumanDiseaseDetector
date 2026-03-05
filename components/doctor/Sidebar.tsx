@@ -13,6 +13,7 @@ import {
   Bell,
   BarChart3,
   User,
+  Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -37,6 +38,7 @@ const menuItems = [
   { id: 'notifications', label: 'Notifications', icon: Bell, badge: 5 },
   { id: 'reports', label: 'Reports', icon: BarChart3 },
   { id: 'profile', label: 'Profile', icon: User },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 export default function Sidebar({ activeTab, setActiveTab, collapsed, setCollapsed }: SidebarProps) {

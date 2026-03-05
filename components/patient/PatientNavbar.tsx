@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, User, Settings, LogOut, Bell } from 'lucide-react';
+import { Menu, X, User, Settings, LogOut, Bell, Shield } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function PatientNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 border-b border-white/20 shadow-sm">
@@ -15,13 +17,16 @@ export default function PatientNavbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/patient-dashboard" className="flex items-center space-x-2 group">
-            <div className="relative w-10 h-10 transform group-hover:scale-110 transition-transform duration-300">
-              <Image 
-                src="/logo.png" 
-                alt="Dhanvantari AI Logo" 
-                fill
-                className="object-contain"
-              />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-teal-500 p-0.5 shadow-md transform group-hover:scale-110 transition-transform duration-300">
+              <div className="w-full h-full rounded-full bg-white p-1.5 flex items-center justify-center">
+                <Image 
+                  src="/logo.png" 
+                  alt="Dhanvantari AI Logo" 
+                  width={24}
+                  height={24}
+                  className="object-contain"
+                />
+              </div>
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
               Dhanvantari AI
@@ -33,18 +38,28 @@ export default function PatientNavbar() {
             <Link href="/patient-dashboard" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
               Home
             </Link>
-            <Link href="#prediction" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
+            <button onClick={() => router.push('/disease-prediction')} className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
               Disease Prediction
-            </Link>
-            <Link href="#consult" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
+            </button>
+            <button onClick={() => router.push('/consult-doctor')} className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
               Consult Doctor
-            </Link>
-            <Link href="#pathology" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
+            </button>
+            <button onClick={() => router.push('/pathology')} className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
               Pathology
-            </Link>
-            <Link href="#knowledge" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
+            </button>
+            <button onClick={() => router.push('/knowledge-center')} className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">
               Knowledge
-            </Link>
+            </button>
+            
+            {/* Health Policy Button */}
+            <button 
+              onClick={() => router.push('/health-policy')}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:shadow-lg transition-all duration-300 font-medium hover:scale-105"
+              title="Health Policy"
+            >
+              <Shield className="w-4 h-4" />
+              <span>Health Policy</span>
+            </button>
             
             {/* Notification Icon */}
             <button 
@@ -76,14 +91,14 @@ export default function PatientNavbar() {
                     <p className="text-xs text-gray-600">john.doe@email.com</p>
                   </div>
                   <Link
-                    href="#profile"
+                    href="/patient-dashboard/profile"
                     className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                   >
                     <User className="w-4 h-4 text-gray-600" />
                     <span className="text-sm text-gray-700">My Profile</span>
                   </Link>
                   <Link
-                    href="#settings"
+                    href="/patient-dashboard/settings"
                     className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                   >
                     <Settings className="w-4 h-4 text-gray-600" />
@@ -130,26 +145,35 @@ export default function PatientNavbar() {
             <Link href="/patient-dashboard" className="block text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
               Home
             </Link>
-            <Link href="#prediction" className="block text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
+            <button onClick={() => router.push('/disease-prediction')} className="block text-left w-full text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
               Disease Prediction
-            </Link>
-            <Link href="#consult" className="block text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
+            </button>
+            <button onClick={() => router.push('/consult-doctor')} className="block text-left w-full text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
               Consult Doctor
-            </Link>
-            <Link href="#pathology" className="block text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
+            </button>
+            <button onClick={() => router.push('/pathology')} className="block text-left w-full text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
               Pathology
-            </Link>
-            <Link href="#knowledge" className="block text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
+            </button>
+            <button onClick={() => router.push('/knowledge-center')} className="block text-left w-full text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium">
               Knowledge
-            </Link>
+            </button>
+            
+            {/* Health Policy Button - Mobile */}
+            <button 
+              onClick={() => router.push('/health-policy')}
+              className="flex items-center gap-2 w-full px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:shadow-lg transition-all duration-300 font-medium"
+            >
+              <Shield className="w-4 h-4" />
+              <span>Health Policy</span>
+            </button>
             
             <hr className="border-gray-200" />
             
-            <Link href="#profile" className="flex items-center space-x-2 py-2 text-gray-700 hover:text-blue-600 transition-colors">
+            <Link href="/patient-dashboard/profile" className="flex items-center space-x-2 py-2 text-gray-700 hover:text-blue-600 transition-colors">
               <User className="w-4 h-4" />
               <span className="font-medium">My Profile</span>
             </Link>
-            <Link href="#settings" className="flex items-center space-x-2 py-2 text-gray-700 hover:text-blue-600 transition-colors">
+            <Link href="/patient-dashboard/settings" className="flex items-center space-x-2 py-2 text-gray-700 hover:text-blue-600 transition-colors">
               <Settings className="w-4 h-4" />
               <span className="font-medium">Settings</span>
             </Link>

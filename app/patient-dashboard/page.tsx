@@ -3,6 +3,7 @@
 import PatientNavbar from '@/components/patient/PatientNavbar';
 import HeroSection from '@/components/patient/HeroSection';
 import FeatureCards from '@/components/patient/FeatureCards';
+import QuickAccessButtons from '@/components/patient/QuickAccessButtons';
 import ServicesSection from '@/components/patient/ServicesSection';
 import Footer from '@/components/patient/Footer';
 import NeuralNetworkContainer from '@/components/ui/NeuralNetworkContainer';
@@ -15,6 +16,8 @@ export default function PatientDashboard() {
       <HeroSection />
 
       <FeatureCards />
+
+      <QuickAccessButtons />
 
       <ServicesSection />
 

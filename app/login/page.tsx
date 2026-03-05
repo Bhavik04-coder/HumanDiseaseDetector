@@ -84,12 +84,12 @@ export default function LoginPage() {
         <div className="flex items-center justify-between mb-8 px-4">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-teal-500 p-0.5 shadow-lg">
-              <div className="w-full h-full rounded-full bg-white p-1.5 flex items-center justify-center">
+              <div className="w-full h-full rounded-full bg-white p-2 flex items-center justify-center">
                 <Image
                   src="/logo.png"
                   alt="Dhanvantari AI"
-                  width={32}
-                  height={32}
+                  width={28}
+                  height={28}
                   className="object-contain"
                 />
               </div>
@@ -242,7 +242,7 @@ export default function LoginPage() {
                           onChange={handleChange}
                           required={activeTab === 'signup'}
                           className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/50 backdrop-blur-sm"
-                          placeholder="John Doe"
+                          placeholder="User Name"
                         />
                       </div>
                     </div>
@@ -261,7 +261,7 @@ export default function LoginPage() {
                         onChange={handleChange}
                         required
                         className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/50 backdrop-blur-sm"
-                        placeholder="john@example.com"
+                        placeholder="username@gmail.com"
                       />
                     </div>
                   </div>

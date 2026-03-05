@@ -23,13 +23,17 @@ export default function Footer() {
               transition={{ duration: 0.6 }}
               className="flex items-center gap-3 mb-4"
             >
-              <Image
-                src="/logo.png"
-                alt="Dhanvantari AI Logo"
-                width={40}
-                height={40}
-                className="object-contain"
-              />
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-teal-500 p-0.5 shadow-md">
+                <div className="w-full h-full rounded-full bg-white p-1.5 flex items-center justify-center">
+                  <Image
+                    src="/logo.png"
+                    alt="Dhanvantari AI Logo"
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
+                </div>
+              </div>
               <span className="text-2xl font-bold">Dhanvantari AI</span>
             </motion.div>
             <p className="text-sky-200 leading-relaxed mb-6">

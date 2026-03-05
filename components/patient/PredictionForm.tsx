@@ -40,7 +40,11 @@ interface PredictionResult {
   confidence: number;
 }
 
-export default function PredictionForm() {
+interface PredictionFormProps {
+  onClose?: () => void;
+}
+
+export default function PredictionForm({ onClose }: PredictionFormProps) {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
@@ -127,18 +131,42 @@ export default function PredictionForm() {
   };
 
   return (
-    <div className="backdrop-blur-md bg-white/70 rounded-3xl shadow-xl border border-white/20 p-8 h-full max-h-[90vh] overflow-y-auto">
-      <div className="flex items-center space-x-3 mb-6">
-        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center">
-          <Search className="w-5 h-5 text-white" />
-        </div>
-        <h3 className="text-2xl font-bold text-gray-800">AI Disease Prediction</h3>
-      </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-4xl max-h-[90vh] backdrop-blur-xl bg-gradient-to-br from-white/95 via-blue-50/95 to-teal-50/95 rounded-3xl shadow-2xl border border-white/30 overflow-hidden">
+        {/* Close Button */}
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="absolute top-6 right-6 z-10 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-6 h-6 text-gray-700" />
+          </button>
+        )}
 
-      <div className="space-y-6">
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-teal-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        <div className="relative h-full max-h-[90vh] overflow-y-auto p-8 md:p-12">
+          <div className="max-w-3xl mx-auto">
+            {/* Header */}
+            <div className="flex items-center space-x-4 mb-8 animate-fade-in">
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <Search className="w-7 h-7 text-white" />
+              </div>
+              <div>
+                <h3 className="text-3xl md:text-4xl font-bold text-gray-800">AI Disease Prediction</h3>
+                <p className="text-gray-600 text-sm mt-1">Powered by advanced machine learning</p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
         {/* API URL Configuration */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             API URL (optional)
           </label>
           <input
@@ -146,13 +174,13 @@ export default function PredictionForm() {
             value={apiUrl}
             onChange={(e) => setApiUrl(e.target.value)}
             placeholder="http://localhost:8000"
-            className="w-full px-4 py-2 bg-white/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
+            className="w-full px-4 py-3 bg-white/70 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm shadow-sm"
           />
         </div>
 
         {/* Symptom Search */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Search and Select Symptoms
           </label>
           <div className="relative">
@@ -161,16 +189,16 @@ export default function PredictionForm() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Type to search symptoms..."
-              className="w-full px-4 py-3 bg-white/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-5 py-4 bg-white/70 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm text-base"
             />
             {searchTerm && filteredSymptoms.length > 0 && (
-              <div className="absolute z-10 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+              <div className="absolute z-10 w-full mt-2 bg-white/95 backdrop-blur-md border-2 border-gray-200 rounded-xl shadow-2xl max-h-60 overflow-y-auto animate-fade-in">
                 {filteredSymptoms.slice(0, 10).map((symptom) => (
                   <button
                     key={symptom}
                     type="button"
                     onClick={() => addSymptom(symptom)}
-                    className="w-full px-4 py-2 text-left hover:bg-blue-50 transition-colors text-sm"
+                    className="w-full px-5 py-3 text-left hover:bg-blue-50 transition-colors text-sm font-medium text-gray-700 border-b border-gray-100 last:border-0"
                   >
                     {symptom.replace(/_/g, ' ')}
                   </button>
@@ -182,24 +210,25 @@ export default function PredictionForm() {
 
         {/* Selected Symptoms */}
         {selectedSymptoms.length > 0 && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="animate-fade-in">
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
               Selected Symptoms ({selectedSymptoms.length})
             </label>
-            <div className="flex flex-wrap gap-2">
-              {selectedSymptoms.map((symptom) => (
+            <div className="flex flex-wrap gap-2 p-4 bg-white/50 rounded-xl border-2 border-blue-100">
+              {selectedSymptoms.map((symptom, index) => (
                 <span
                   key={symptom}
-                  className="inline-flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm"
+                  className="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-full text-sm font-medium shadow-md hover:shadow-lg transition-all animate-fade-in"
+                  style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <span>{symptom.replace(/_/g, ' ')}</span>
                   <button
                     type="button"
                     onClick={() => removeSymptom(symptom)}
                     aria-label={`Remove ${symptom.replace(/_/g, ' ')}`}
-                    className="hover:bg-blue-200 rounded-full p-0.5 transition-colors"
+                    className="hover:bg-white/20 rounded-full p-1 transition-colors"
                   >
-                    <X className="w-3 h-3" />
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </span>
               ))}
@@ -209,9 +238,9 @@ export default function PredictionForm() {
 
         {/* Error Message */}
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-2">
-            <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-700">{error}</p>
+          <div className="p-5 bg-red-50 border-2 border-red-200 rounded-xl flex items-start space-x-3 animate-fade-in shadow-sm">
+            <AlertCircle className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-red-700 leading-relaxed">{error}</p>
           </div>
         )}
 
@@ -220,12 +249,13 @@ export default function PredictionForm() {
           type="button"
           onClick={handlePredict}
           disabled={loading || selectedSymptoms.length === 0}
-          className="w-full px-6 py-4 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center space-x-2"
+          className="w-full px-8 py-5 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center space-x-3 animate-fade-in"
+          style={{ animationDelay: '0.3s' }}
         >
           {loading ? (
             <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Analyzing...</span>
+              <Loader2 className="w-6 h-6 animate-spin" />
+              <span>Analyzing Symptoms...</span>
             </>
           ) : (
             <span>Predict Disease</span>
@@ -234,43 +264,46 @@ export default function PredictionForm() {
 
         {/* Prediction Result */}
         {prediction && (
-          <div className="mt-6 p-6 bg-gradient-to-br from-blue-50 to-teal-50 rounded-2xl border border-blue-100 space-y-4 animate-fade-in">
+          <div className="mt-8 p-8 bg-gradient-to-br from-blue-50 via-white to-teal-50 rounded-2xl border-2 border-blue-200 space-y-6 animate-scale-in shadow-xl">
             <div className="flex items-center justify-between">
-              <h4 className="text-lg font-bold text-gray-800">Prediction Result</h4>
-              <CheckCircle2 className="w-6 h-6 text-green-500" />
+              <h4 className="text-2xl font-bold text-gray-800">Prediction Result</h4>
+              <CheckCircle2 className="w-8 h-8 text-green-500" />
             </div>
             
-            <div className="space-y-3">
-              <div>
-                <span className="text-sm text-gray-600">Predicted Disease:</span>
-                <p className="text-xl font-bold text-blue-600">{prediction.prediction}</p>
+            <div className="space-y-5">
+              <div className="p-5 bg-white/70 rounded-xl border border-blue-100">
+                <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Predicted Disease:</span>
+                <p className="text-2xl md:text-3xl font-bold text-blue-600 mt-2">{prediction.prediction}</p>
               </div>
               
-              <div>
-                <span className="text-sm text-gray-600">Confidence:</span>
-                <div className="flex items-center space-x-3 mt-1">
-                  <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="p-5 bg-white/70 rounded-xl border border-blue-100">
+                <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Confidence Level:</span>
+                <div className="flex items-center space-x-4 mt-3">
+                  <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
                     <div 
-                      className="h-full bg-gradient-to-r from-blue-500 to-teal-500 transition-all duration-1000"
+                      className="h-full bg-gradient-to-r from-blue-500 to-teal-500 transition-all duration-1000 rounded-full shadow-lg"
                       style={{ width: `${prediction.confidence}%` }}
                     ></div>
                   </div>
-                  <span className="text-sm font-semibold text-gray-700">{prediction.confidence}%</span>
+                  <span className="text-xl font-bold text-gray-800 min-w-[60px]">{prediction.confidence}%</span>
                 </div>
               </div>
               
-              <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
-                <div className="flex items-start space-x-2">
-                  <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <div className="p-5 bg-yellow-50 border-2 border-yellow-200 rounded-xl shadow-sm">
+                <div className="flex items-start space-x-3">
+                  <AlertCircle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" />
                   <div className="text-sm text-yellow-800">
-                    <p className="font-semibold mb-1">Important Notice:</p>
-                    <p>This is an AI prediction and should not replace professional medical advice. Please consult with a healthcare provider for proper diagnosis and treatment.</p>
+                    <p className="font-bold mb-2 text-base">⚠️ Important Medical Disclaimer:</p>
+                    <p className="leading-relaxed">This is an AI prediction and should not replace professional medical advice. Please consult with a qualified healthcare provider for proper diagnosis and treatment.</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -28,24 +28,25 @@ export default function KnowledgeScroll({ onScrollComplete }: KnowledgeScrollPro
   // Text opacity for "Scroll" indicator
   const scrollTextOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
 
-  // Force scroll to top on mount - multiple methods for reliability
+  // Force scroll to top on mount and prevent body overflow
   useEffect(() => {
-    // Method 1: Immediate scroll
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    // Force scroll to top
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     
-    // Method 2: After a tiny delay
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, 0);
-    
-    // Method 3: Disable scroll restoration
+    // Disable scroll restoration
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
+
+    // Cleanup: restore body scroll when component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, []);
 
   // Monitor scroll progress to show button at end
@@ -112,12 +113,11 @@ export default function KnowledgeScroll({ onScrollComplete }: KnowledgeScrollPro
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-blue-50">
+      <div className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-teal-50 to-blue-100">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-xl font-semibold text-blue-900">Loading Knowledge Center...</p>
           <p className="text-sm text-gray-600 mt-2">{progress}%</p>
-          <p className="text-xs text-gray-500 mt-2">Loading from: /knowledge-scroll</p>
         </div>
       </div>
     )
@@ -161,6 +161,7 @@ export default function KnowledgeScroll({ onScrollComplete }: KnowledgeScrollPro
           className="absolute inset-0 flex items-center justify-center z-40"
         >
           <button
+            type="button"
             onClick={onScrollComplete}
             className="px-8 py-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white text-lg font-semibold rounded-xl shadow-2xl hover:scale-105 transition-transform duration-300"
           >
@@ -180,17 +181,17 @@ function KnowledgeOverlayText({ scrollProgress }: { scrollProgress: any }) {
     {
       range: [0.15, 0.25],
       text: 'Medical Knowledge Hub',
-      subtext: 'Comprehensive health information',
+      subtext: 'Curated health information from trusted sources',
     },
     {
       range: [0.45, 0.55],
-      text: 'AI-Generated Insights',
-      subtext: 'Personalized health articles',
+      text: 'Expert Health Guides',
+      subtext: 'Evidence-based articles and research',
     },
     {
       range: [0.75, 0.85],
-      text: 'Learn & Stay Healthy',
-      subtext: 'Evidence-based medical content',
+      text: 'Stay Informed',
+      subtext: 'Your health education companion',
     },
   ]
 

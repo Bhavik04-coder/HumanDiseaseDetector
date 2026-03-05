@@ -12,6 +12,7 @@ import PrescriptionGenerator from '@/components/doctor/PrescriptionGenerator';
 import ReportsAnalytics from '@/components/doctor/ReportsAnalytics';
 import AppointmentsPage from '@/components/doctor/AppointmentsPage';
 import ProfilePage from '@/components/doctor/ProfilePage';
+import SettingsPage from '@/components/doctor/SettingsPage';
 
 export default function DoctorDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -39,6 +40,8 @@ export default function DoctorDashboard() {
         return <AppointmentsPage />;
       case 'profile':
         return <ProfilePage />;
+      case 'settings':
+        return <SettingsPage />;
       case 'notifications':
         return <DashboardOverview />;
       default:

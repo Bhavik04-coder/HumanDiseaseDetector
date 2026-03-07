@@ -40,8 +40,7 @@ next-env.d.ts
 # OS specific
 Thumbs.db
 
-# Python files (exclude from this frontend repo)
-*.py
+# Python files (exclude from root, but allow Model folder)
 *.pyc
 __pycache__/
 *.py[cod]
@@ -55,13 +54,13 @@ pip-log.txt
 *.egg-info/
 .pytest_cache/
 .coverage
-*.joblib
-requirements.txt
 
-# Backend specific files
-Final_dataset.csv
-dataset/
-models/
-eda_outputs/
-data_analysis/
-TECHNICAL_APPROACH.txt
+# Exclude Python files from root but allow Model folder
+/*.py
+
+# Backend specific files (exclude from root)
+/dataset/
+/models/
+/eda_outputs/
+/data_analysis/
+/TECHNICAL_APPROACH.txt

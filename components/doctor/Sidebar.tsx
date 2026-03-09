@@ -17,6 +17,7 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Microscope,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -31,10 +32,10 @@ const menuItems = [
   { id: 'patients', label: 'Patients', icon: Users },
   { id: 'ai-predictions', label: 'AI Predictions', icon: Brain },
   { id: 'appointments', label: 'Appointments', icon: Calendar },
-  { id: 'medicine-reviews', label: 'Medicine Reviews', icon: Pill },
   { id: 'consult-doctors', label: 'Consult Doctors', icon: Stethoscope },
   { id: 'progress-tracker', label: 'Progress Tracker', icon: TrendingUp },
   { id: 'prescriptions', label: 'Prescriptions', icon: FileText },
+  { id: 'lab-pathology', label: 'Lab & Pathology', icon: Microscope },
   { id: 'notifications', label: 'Notifications', icon: Bell, badge: 5 },
   { id: 'reports', label: 'Reports', icon: BarChart3 },
   { id: 'profile', label: 'Profile', icon: User },
@@ -44,9 +45,8 @@ const menuItems = [
 export default function Sidebar({ activeTab, setActiveTab, collapsed, setCollapsed }: SidebarProps) {
   return (
     <aside
-      className={`fixed left-0 top-0 h-screen bg-white shadow-xl transition-all duration-300 z-50 ${
-        collapsed ? 'w-20' : 'w-64'
-      }`}
+      className={`fixed left-0 top-0 h-screen bg-white shadow-xl transition-all duration-300 z-50 ${collapsed ? 'w-20' : 'w-64'
+        }`}
     >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-blue-100">
@@ -79,11 +79,10 @@ export default function Sidebar({ activeTab, setActiveTab, collapsed, setCollaps
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group relative ${
-                isActive
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group relative ${isActive
                   ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-200'
                   : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
-              }`}
+                }`}
             >
               <Icon className={`w-5 h-5 ${collapsed ? 'mx-auto' : ''}`} />
               {!collapsed && (
@@ -106,13 +105,6 @@ export default function Sidebar({ activeTab, setActiveTab, collapsed, setCollaps
         })}
       </nav>
 
-      {/* Logout */}
-      <div className="absolute bottom-4 left-0 right-0 px-4">
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-all duration-200">
-          <LogOut className={`w-5 h-5 ${collapsed ? 'mx-auto' : ''}`} />
-          {!collapsed && <span className="font-medium">Logout</span>}
-        </button>
-      </div>
     </aside>
   );
 }

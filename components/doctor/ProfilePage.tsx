@@ -1,8 +1,24 @@
 'use client';
 
-import { User, Mail, Phone, MapPin, Award, Calendar } from 'lucide-react';
+import { useState } from 'react';
+import { User, Mail, Phone, MapPin, Award, Calendar, Check, Edit2 } from 'lucide-react';
 
 export default function ProfilePage() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState({
+    name: 'Dr. Sarah Johnson',
+    specialty: 'Cardiologist',
+    email: 'sarah.johnson@hospital.com',
+    phone: '+1 (555) 123-4567',
+    location: 'City General Hospital, New York',
+    license: 'MD-12345-NY',
+    experience: '15 Years',
+    certifications: 'ABIM, FACC',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Profile</h1>
@@ -14,11 +30,32 @@ export default function ProfilePage() {
             <div className="flex flex-col items-center">
               <img
                 src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah"
-                alt="Dr. Sarah Johnson"
+                alt={profile.name}
                 className="w-32 h-32 rounded-full mb-4"
               />
-              <h2 className="text-2xl font-bold text-gray-900 mb-1">Dr. Sarah Johnson</h2>
-              <p className="text-gray-600 mb-4">Cardiologist</p>
+              {isEditing ? (
+                <div className="w-full space-y-2 mb-4">
+                  <input
+                    type="text"
+                    name="name"
+                    value={profile.name}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-center text-xl font-bold text-gray-900 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="text"
+                    name="specialty"
+                    value={profile.specialty}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-center text-gray-600 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              ) : (
+                <>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-1">{profile.name}</h2>
+                  <p className="text-gray-600 mb-4">{profile.specialty}</p>
+                </>
+              )}
               <div className="flex gap-2 mb-6">
                 <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
                   Online
@@ -27,8 +64,14 @@ export default function ProfilePage() {
                   Verified
                 </span>
               </div>
-              <button className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-200">
-                Edit Profile
+              <button
+                onClick={() => setIsEditing(!isEditing)}
+                className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 ${isEditing
+                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white'
+                    : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
+                  }`}
+              >
+                {isEditing ? <><Check className="w-5 h-5" /> Save Changes</> : <><Edit2 className="w-5 h-5" /> Edit Profile</>}
               </button>
             </div>
           </div>
@@ -45,8 +88,18 @@ export default function ProfilePage() {
                   <Mail className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Email</p>
-                  <p className="font-semibold text-gray-900">sarah.johnson@hospital.com</p>
+                  <p className="text-sm text-gray-600 mb-1">Email</p>
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      name="email"
+                      value={profile.email}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold text-gray-900">{profile.email}</p>
+                  )}
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -54,19 +107,37 @@ export default function ProfilePage() {
                   <Phone className="w-6 h-6 text-green-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Phone</p>
-                  <p className="font-semibold text-gray-900">+1 (555) 123-4567</p>
+                  <p className="text-sm text-gray-600 mb-1">Phone</p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="phone"
+                      value={profile.phone}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold text-gray-900">{profile.phone}</p>
+                  )}
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
                   <MapPin className="w-6 h-6 text-purple-600" />
                 </div>
-                <div>
-                  <p className="text-sm text-gray-600">Location</p>
-                  <p className="font-semibold text-gray-900">
-                    City General Hospital, New York
-                  </p>
+                <div className="w-full">
+                  <p className="text-sm text-gray-600 mb-1">Location</p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="location"
+                      value={profile.location}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold text-gray-900">{profile.location}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -81,28 +152,68 @@ export default function ProfilePage() {
                   <Award className="w-5 h-5 text-blue-600" />
                   <p className="text-sm text-gray-600">License Number</p>
                 </div>
-                <p className="font-semibold text-gray-900">MD-12345-NY</p>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="license"
+                    value={profile.license}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                ) : (
+                  <p className="font-semibold text-gray-900">{profile.license}</p>
+                )}
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <Calendar className="w-5 h-5 text-green-600" />
                   <p className="text-sm text-gray-600">Years of Experience</p>
                 </div>
-                <p className="font-semibold text-gray-900">15 Years</p>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="experience"
+                    value={profile.experience}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                ) : (
+                  <p className="font-semibold text-gray-900">{profile.experience}</p>
+                )}
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <User className="w-5 h-5 text-purple-600" />
                   <p className="text-sm text-gray-600">Specialization</p>
                 </div>
-                <p className="font-semibold text-gray-900">Cardiology</p>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="specialty" // Maps to the same state as title specialty
+                    value={profile.specialty}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                ) : (
+                  <p className="font-semibold text-gray-900">{profile.specialty}</p>
+                )}
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <Award className="w-5 h-5 text-orange-600" />
                   <p className="text-sm text-gray-600">Certifications</p>
                 </div>
-                <p className="font-semibold text-gray-900">ABIM, FACC</p>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="certifications"
+                    value={profile.certifications}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                ) : (
+                  <p className="font-semibold text-gray-900">{profile.certifications}</p>
+                )}
               </div>
             </div>
           </div>

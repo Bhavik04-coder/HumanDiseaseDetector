@@ -99,7 +99,7 @@ export default function ThemeToggle() {
           <motion.g
             style={{ opacity: sunRays }}
           >
-            <circle
+            <motion.circle
               cx="12"
               cy="12"
               r="4"

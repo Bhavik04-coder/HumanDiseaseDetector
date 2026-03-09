@@ -78,6 +78,9 @@ interface Booking {
   bookingDate: Date;
   sampleCollectionDate: Date;
   status: 'pending' | 'confirmed' | 'collected' | 'completed';
+  queuePosition?: number;
+  estimatedTime?: string;
+  isWaitlisted?: boolean;
 }
 
 const TESTS: Test[] = [
@@ -96,50 +99,50 @@ const TESTS: Test[] = [
 ];
 
 const PACKAGES: Package[] = [
-  { 
-    id: 101, 
-    name: 'Basic Wellness', 
-    tests: 8, 
-    price: 799, 
+  {
+    id: 101,
+    name: 'Basic Wellness',
+    tests: 8,
+    price: 799,
     originalPrice: 1299,
-    icon: <HeartPulse size={22} />, 
-    color: '#2563eb', 
+    icon: <HeartPulse size={22} />,
+    color: '#2563eb',
     bg: '#eff6ff',
     testList: ['CBC', 'Blood Sugar', 'Lipid Profile', 'Liver Function', 'Kidney Function', 'Thyroid', 'Vitamin D', 'Urine Analysis'],
     description: 'Essential health screening package'
   },
-  { 
-    id: 102, 
-    name: 'Advanced Health', 
-    tests: 18, 
-    price: 1499, 
+  {
+    id: 102,
+    name: 'Advanced Health',
+    tests: 18,
+    price: 1499,
     originalPrice: 2499,
-    icon: <Activity size={22} />, 
-    color: '#0d9488', 
+    icon: <Activity size={22} />,
+    color: '#0d9488',
     bg: '#f0fdfa',
     testList: ['All Basic Tests', 'HbA1c', 'Iron Studies', 'Calcium', 'Vitamin B12', 'ECG', 'Chest X-Ray', 'More...'],
     description: 'Comprehensive health assessment'
   },
-  { 
-    id: 103, 
-    name: 'Complete Body', 
-    tests: 32, 
-    price: 2999, 
+  {
+    id: 103,
+    name: 'Complete Body',
+    tests: 32,
+    price: 2999,
     originalPrice: 4999,
-    icon: <Microscope size={22} />, 
-    color: '#7c3aed', 
+    icon: <Microscope size={22} />,
+    color: '#7c3aed',
     bg: '#f5f3ff',
     testList: ['All Advanced Tests', 'Cardiac Markers', 'Tumor Markers', 'Hormone Panel', 'Allergy Tests', 'More...'],
     description: 'Full body diagnostic package'
   },
-  { 
-    id: 104, 
-    name: 'Diabetes Care', 
-    tests: 12, 
-    price: 999, 
+  {
+    id: 104,
+    name: 'Diabetes Care',
+    tests: 12,
+    price: 999,
     originalPrice: 1599,
-    icon: <Droplets size={22} />, 
-    color: '#db2777', 
+    icon: <Droplets size={22} />,
+    color: '#db2777',
     bg: '#fdf2f8',
     testList: ['HbA1c', 'Fasting Sugar', 'PP Sugar', 'Lipid Profile', 'Kidney Function', 'Liver Function', 'More...'],
     description: 'Diabetes monitoring package'
@@ -153,7 +156,7 @@ export default function PathologyPage() {
   const [activeTab, setActiveTab] = useState('all');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
-  
+
   // Cart and Booking States
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCart, setShowCart] = useState(false);
@@ -161,7 +164,7 @@ export default function PathologyPage() {
   const [showBookingStatus, setShowBookingStatus] = useState(false);
   const [showQueueDisplay, setShowQueueDisplay] = useState(false);
   const [currentBooking, setCurrentBooking] = useState<Booking | null>(null);
-  
+
   // Checkout States
   const [checkoutStep, setCheckoutStep] = useState<'cart' | 'time' | 'address' | 'payment' | 'review' | 'success'>('cart');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<{ date: string; time: string; isWaitlist: boolean } | null>(null);
@@ -211,13 +214,13 @@ export default function PathologyPage() {
   const finalTotal = cartTotal + collectionFee - discount;
 
   const addToCart = (item: Test | Package, type: 'test' | 'package') => {
-    const cartItem: CartItem = {
+    const cartItem = {
       ...item,
       quantity: 1,
       type,
       time: 'time' in item ? item.time : '48 hrs'
-    };
-    
+    } as unknown as CartItem;
+
     setCart(prev => {
       const existing = prev.find(i => i.id === item.id && i.type === type);
       if (existing) {
@@ -290,7 +293,7 @@ export default function PathologyPage() {
     setCart([]);
     setDiscount(0);
     setPromoCode('');
-    
+
     // Show queue display if not waitlisted
     if (!selectedTimeSlot?.isWaitlist) {
       setShowQueueDisplay(true);
@@ -310,12 +313,12 @@ export default function PathologyPage() {
       <PatientNavbar />
 
       {/* Hero Section with Mouse Animation */}
-      <div 
+      <div
         ref={heroRef}
         className="relative overflow-hidden bg-gradient-to-r from-purple-600 via-blue-700 to-teal-600 pt-32 pb-20"
       >
         {/* Mouse-controlled floating orbs */}
-        <div 
+        <div
           className="absolute w-96 h-96 bg-purple-400/30 rounded-full blur-3xl transition-all duration-500 ease-out"
           style={{
             left: `${mousePosition.x * 100}%`,
@@ -323,7 +326,7 @@ export default function PathologyPage() {
             transform: `translate(-50%, -50%) scale(${1 + mousePosition.y * 0.3})`,
           }}
         />
-        <div 
+        <div
           className="absolute w-80 h-80 bg-teal-400/20 rounded-full blur-3xl transition-all duration-700 ease-out"
           style={{
             left: `${(1 - mousePosition.x) * 100}%`,
@@ -331,9 +334,9 @@ export default function PathologyPage() {
             transform: `translate(-50%, -50%) scale(${1 + mousePosition.x * 0.3})`,
           }}
         />
-        
+
         {/* Floating medical icons */}
-        <div 
+        <div
           className="absolute transition-all duration-500 ease-out opacity-20"
           style={{
             left: `${20 + mousePosition.x * 10}%`,
@@ -343,7 +346,7 @@ export default function PathologyPage() {
         >
           <FlaskConical className="w-16 h-16 text-white" />
         </div>
-        <div 
+        <div
           className="absolute transition-all duration-700 ease-out opacity-20"
           style={{
             right: `${15 + mousePosition.x * 10}%`,
@@ -353,7 +356,7 @@ export default function PathologyPage() {
         >
           <Microscope className="w-20 h-20 text-white" />
         </div>
-        <div 
+        <div
           className="absolute transition-all duration-600 ease-out opacity-20"
           style={{
             left: `${60 + mousePosition.y * 10}%`,
@@ -366,7 +369,7 @@ export default function PathologyPage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
-            <h1 
+            <h1
               className="text-5xl md:text-6xl font-bold text-white mb-6 transition-transform duration-300"
               style={{
                 transform: `translateY(${mousePosition.y * -10}px)`,
@@ -375,7 +378,7 @@ export default function PathologyPage() {
               Precision Pathology
               <span className="block text-purple-200">At Your Doorstep</span>
             </h1>
-            <p 
+            <p
               className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto transition-transform duration-500"
               style={{
                 transform: `translateY(${mousePosition.y * -5}px)`,
@@ -384,7 +387,7 @@ export default function PathologyPage() {
               Book 200+ lab tests online. Free home sample collection. Accurate digital reports — trusted by 2M+ patients across India.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-white">
-              <div 
+              <div
                 className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full transition-all duration-300 hover:bg-white/20 hover:scale-105"
                 style={{
                   transform: `translateX(${mousePosition.x * -10}px) translateY(${mousePosition.y * 5}px)`,
@@ -393,7 +396,7 @@ export default function PathologyPage() {
                 <Shield className="w-5 h-5" />
                 <span className="font-medium">NABL Certified</span>
               </div>
-              <div 
+              <div
                 className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full transition-all duration-400 hover:bg-white/20 hover:scale-105"
                 style={{
                   transform: `translateY(${mousePosition.y * 5}px)`,
@@ -402,7 +405,7 @@ export default function PathologyPage() {
                 <Zap className="w-5 h-5" />
                 <span className="font-medium">Same-Day Results</span>
               </div>
-              <div 
+              <div
                 className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full transition-all duration-500 hover:bg-white/20 hover:scale-105"
                 style={{
                   transform: `translateX(${mousePosition.x * 10}px) translateY(${mousePosition.y * 5}px)`,
@@ -470,7 +473,7 @@ export default function PathologyPage() {
                 <h3 className="text-xl font-bold text-gray-800 mb-2">{p.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{p.tests} tests included</p>
                 <div className="text-2xl font-bold mb-4" style={{ color: p.color }}>{p.price}</div>
-                <button 
+                <button
                   type="button"
                   onClick={() => addToCart(p, 'package')}
                   className="w-full px-4 py-2 text-white rounded-lg hover:opacity-90 transition-opacity"
@@ -493,11 +496,10 @@ export default function PathologyPage() {
                   key={tab}
                   type="button"
                   onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
-                    activeTab === tab 
-                      ? 'bg-white text-purple-600 shadow-sm' 
-                      : 'text-gray-600 hover:text-gray-800'
-                  }`}
+                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${activeTab === tab
+                    ? 'bg-white text-purple-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-800'
+                    }`}
                 >
                   {tab === 'all' ? 'All Tests' : '⭐ Popular'}
                 </button>
@@ -522,11 +524,11 @@ export default function PathologyPage() {
             {filtered.length === 0 ? (
               <div className="text-center py-12 text-gray-400">No tests found for "{search}"</div>
             ) : filtered.map((t, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="flex items-center p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors gap-4"
               >
-                <div 
+                <div
                   className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
                   style={{ background: `${t.color}15`, color: t.color }}
                 >
@@ -608,7 +610,7 @@ export default function PathologyPage() {
       {showCart && checkoutStep === 'cart' && (
         <div className="fixed inset-0 z-50 flex items-end justify-end">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowCart(false)} />
-          
+
           <div className="relative w-full max-w-md h-full bg-white shadow-2xl flex flex-col">
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
               <h2 className="text-2xl font-bold text-gray-800">Your Cart</h2>
@@ -631,7 +633,7 @@ export default function PathologyPage() {
               ) : (
                 cart.map(item => (
                   <div key={`${item.id}-${item.type}`} className="flex items-center space-x-4 bg-gray-50 rounded-2xl p-4">
-                    <div 
+                    <div
                       className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl"
                       style={{ background: `${item.color}15`, color: item.color }}
                     >

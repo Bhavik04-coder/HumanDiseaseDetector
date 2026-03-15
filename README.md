@@ -27,6 +27,7 @@ Leveraging artificial intelligence to provide early disease detection, personali
 - Prescription generator
 - Reports and analytics
 - Real-time notifications
+- Added Doctor Dashboard
 
 ### UI/UX Features
 - **Animated Feature Cards** with dynamic backgrounds:

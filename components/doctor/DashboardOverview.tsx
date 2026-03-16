@@ -64,9 +64,8 @@ export default function DashboardOverview() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsOnline(!isOnline)}
-                  className={`w-3 h-3 rounded-full ${
-                    isOnline ? 'bg-green-500' : 'bg-gray-400'
-                  } animate-pulse`}
+                  className={`w-3 h-3 rounded-full ${isOnline ? 'bg-green-500' : 'bg-gray-400'
+                    } animate-pulse`}
                   aria-label={`Toggle status: Currently ${isOnline ? 'online' : 'offline'}`}
                   title={`Toggle status: Currently ${isOnline ? 'online' : 'offline'}`}
                 />
@@ -134,11 +133,10 @@ export default function DashboardOverview() {
                 </div>
                 <div className="text-right">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                      patient.risk === 'High'
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${patient.risk === 'High'
                         ? 'bg-red-100 text-red-700'
                         : 'bg-yellow-100 text-yellow-700'
-                    }`}
+                      }`}
                   >
                     {patient.risk} Risk
                   </span>
@@ -168,6 +166,32 @@ export default function DashboardOverview() {
               </button>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* AI Predictions Feed */}
+      <div className="mt-8 bg-white rounded-2xl shadow-lg p-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <Brain className="w-6 h-6 text-purple-600" />
+          Recent AI Predictions Feed
+        </h2>
+        <div className="space-y-4">
+          {[
+            { patient: 'Alice Smith', disease: 'Pneumonia', confidence: 91, time: '2 mins ago', severity: 'High' },
+            { patient: 'Robert Johnson', disease: 'Arthritis', confidence: 85, time: '15 mins ago', severity: 'Low' },
+            { patient: 'Emily Davis', disease: 'Migraine', confidence: 78, time: '1 hour ago', severity: 'Medium' }
+          ].map((prediction, index) => (
+            <div key={index} className="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:shadow-md transition">
+              <div className="flex items-center gap-4">
+                <div className={`w-2 h-12 rounded-full ${prediction.severity === 'High' ? 'bg-red-500' : prediction.severity === 'Medium' ? 'bg-yellow-500' : 'bg-green-500'}`}></div>
+                <div>
+                  <p className="font-semibold text-gray-900">{prediction.patient}</p>
+                  <p className="text-sm text-gray-600">Predicted: <span className="font-medium text-purple-600">{prediction.disease}</span> ({prediction.confidence}% confidence)</p>
+                </div>
+              </div>
+              <span className="text-sm text-gray-500">{prediction.time}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

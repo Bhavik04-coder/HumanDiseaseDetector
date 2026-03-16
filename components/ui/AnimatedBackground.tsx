@@ -51,13 +51,13 @@ export default function AnimatedBackground({ fullScreen = true }: AnimatedBackgr
       color: string
 
       constructor() {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
+        this.x = Math.random() * canvas!.width
+        this.y = Math.random() * canvas!.height
         this.size = Math.random() * 3 + 1
         this.speedX = (Math.random() - 0.5) * 0.3
         this.speedY = (Math.random() - 0.5) * 0.3
         this.opacity = Math.random() * 0.3 + 0.1
-        
+
         const colors = ['#0ea5a4', '#2563eb', '#06b6d4']
         this.color = colors[Math.floor(Math.random() * colors.length)]
       }
@@ -76,10 +76,10 @@ export default function AnimatedBackground({ fullScreen = true }: AnimatedBackgr
         this.x += this.speedX
         this.y += this.speedY
 
-        if (this.x > canvas.width) this.x = 0
-        if (this.x < 0) this.x = canvas.width
-        if (this.y > canvas.height) this.y = 0
-        if (this.y < 0) this.y = canvas.height
+        if (this.x > canvas!.width) this.x = 0
+        if (this.x < 0) this.x = canvas!.width
+        if (this.y > canvas!.height) this.y = 0
+        if (this.y < 0) this.y = canvas!.height
       }
 
       draw() {
@@ -152,11 +152,11 @@ export default function AnimatedBackground({ fullScreen = true }: AnimatedBackgr
     <div className={wrapperClass}>
       {/* Animated Gradient Mesh Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-white via-cyan-50/30 to-blue-50/50" />
-      
+
       {/* Animated Gradient Orbs */}
       <div className="absolute inset-0">
         {/* Teal Blob */}
-        <div 
+        <div
           className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-3xl animate-blob"
           style={{
             background: 'radial-gradient(circle, #0ea5a4 0%, transparent 70%)',
@@ -165,9 +165,9 @@ export default function AnimatedBackground({ fullScreen = true }: AnimatedBackgr
             animationDelay: '0s'
           }}
         />
-        
+
         {/* Blue Blob */}
-        <div 
+        <div
           className="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-3xl animate-blob"
           style={{
             background: 'radial-gradient(circle, #2563eb 0%, transparent 70%)',
@@ -176,9 +176,9 @@ export default function AnimatedBackground({ fullScreen = true }: AnimatedBackgr
             animationDelay: '2s'
           }}
         />
-        
+
         {/* Cyan Blob */}
-        <div 
+        <div
           className="absolute w-[450px] h-[450px] rounded-full opacity-20 blur-3xl animate-blob"
           style={{
             background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)',
@@ -196,7 +196,7 @@ export default function AnimatedBackground({ fullScreen = true }: AnimatedBackgr
       />
 
       {/* Grid Pattern Overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: `
@@ -208,7 +208,7 @@ export default function AnimatedBackground({ fullScreen = true }: AnimatedBackgr
       />
 
       {/* Radial Gradient Overlay for depth */}
-      <div 
+      <div
         className="absolute inset-0"
         style={{
           background: 'radial-gradient(circle at 50% 50%, transparent 0%, rgba(255,255,255,0.3) 100%)'
